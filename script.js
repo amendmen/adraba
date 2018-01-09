@@ -15,36 +15,37 @@
 
 		document.getElementById('initialize').onclick = function() {
 			flag = true;
-			initialize();
+			initialize('#block');
 		}
 
 		document.getElementById('disable').onclick = function() {
-			disable();
+			disable('.top .caption');
 		}
 		
-		function initialize() {		
-			sticky();	
+
+		function initialize(css) {		
+			sticky(css);	
 			window.onscroll = function() {
 				if(!flag) {
 					return false;
 				} else {
-					sticky();
+					sticky(css);
 				}
 			}		
 		}
 
-		function disable() {
+		function disable(css) {
 			flag = false;
-			var off = document.querySelector('.top .caption');
+			var off = document.querySelector(css);
 			if(off) {
 				off.style.bottom = 0;
 			}
 		
 		}
 
-		function sticky() {
+		function sticky(targ) {
 			var b = [];
-					b = document.querySelectorAll('#block');
+					b = document.querySelectorAll(targ);
 					b.forEach(function(a) {
 						if (a.getBoundingClientRect().top > -a.scrollHeight && a.getBoundingClientRect().top <= 0) {
 							a.classList.add('top')
