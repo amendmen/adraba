@@ -19,7 +19,12 @@ document.getElementById('initialize').onclick = function() {
 }
 
 document.getElementById('disable').onclick = function() {
+	flag = false;
 	new Test('.top .caption').disable();
+	window.onscroll = function(event) {
+		event.preventDefault();
+	}
+			
 }
 
 var Test = class {
@@ -30,9 +35,9 @@ var Test = class {
 
 	initialize() {	
 
-		sticky(this.css);	
+			sticky(this.css);
 
-		function sticky(cs) {
+			function sticky(cs) {
 			var b = [];
 			b = document.querySelectorAll(cs);
 			b.forEach(function(a) {
@@ -47,9 +52,9 @@ var Test = class {
 			window.onscroll = function() {
 				sticky(cs);
 			}
-		}
-
-					
+			
+			
+		}				
 	}		
 
 
@@ -59,7 +64,7 @@ var Test = class {
 		if(off) {
 			off.style.bottom = 0;
 		}
-		
+
 	}
 
 
