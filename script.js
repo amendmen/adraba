@@ -1,58 +1,67 @@
 	
 
-	var block = document.getElementById('block');
+var block = document.getElementById('block');
 
-	function createDiv() {			
-		var blockCopy = block.cloneNode(true);
-		var insert = document.body.appendChild(blockCopy);	
-		}
-		for( i = 0; i < 100; i++) {
-			createDiv()
-		}
-		
+function createDiv() {			
+	var blockCopy = block.cloneNode(true);
+	var insert = document.body.appendChild(blockCopy);	
+}
+for( i = 0; i < 100; i++) {
+	createDiv()
+}
 
-		var flag = false;
 
-		document.getElementById('initialize').onclick = function() {
-			flag = true;
-			initialize('#block');
-		}
+var flag = false;
 
-		document.getElementById('disable').onclick = function() {
-			disable('.top .caption');
-		}
-		
+document.getElementById('initialize').onclick = function() {
+	flag = true;
+	new Test('#block').initialize();
+}
 
-		function initialize(css) {		
-			sticky(css);	
-			window.onscroll = function() {
-				if(!flag) {
-					return false;
-				} else {
-					sticky(css);
-				}
-			}		
-		}
+document.getElementById('disable').onclick = function() {
+	new Test('.top .caption').disable();
+}
 
-		function disable(css) {
-			flag = false;
-			var off = document.querySelector(css);
-			if(off) {
-				off.style.bottom = 0;
-			}
-		
-		}
+var Test = class {
 
-		function sticky(targ) {
+	constructor(css) {
+		this.css = css;
+	}
+
+	initialize() {	
+
+		sticky(this.css);	
+
+		function sticky(cs) {
 			var b = [];
-					b = document.querySelectorAll(targ);
-					b.forEach(function(a) {
-						if (a.getBoundingClientRect().top > -a.scrollHeight && a.getBoundingClientRect().top <= 0) {
-							a.classList.add('top')
-							var f = document.querySelector('.top .caption');
-							f.style.bottom = a.getBoundingClientRect().top + 'px';
-						} else {
-							a.classList.remove('top')
-						}
-					}) 
+			b = document.querySelectorAll(cs);
+			b.forEach(function(a) {
+				if (a.getBoundingClientRect().top > -a.scrollHeight && a.getBoundingClientRect().top <= 0) {
+					a.classList.add('top')
+					var f = document.querySelector('.top .caption');
+					f.style.bottom = a.getBoundingClientRect().top + 'px';
+				} else {
+					a.classList.remove('top')
+				}
+			}) 
+			window.onscroll = function() {
+				sticky(cs);
+			}
 		}
+
+					
+	}		
+
+
+	disable() {
+		flag = false;
+		var off = document.querySelector(this.css);
+		if(off) {
+			off.style.bottom = 0;
+		}
+		
+	}
+
+
+}
+
